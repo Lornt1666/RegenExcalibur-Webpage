@@ -35,6 +35,7 @@ export default function Navigation() {
           <button 
             className="md:hidden text-regen-gold"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle mobile menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isOpen ? (

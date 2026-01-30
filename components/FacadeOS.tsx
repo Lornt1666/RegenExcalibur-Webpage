@@ -28,7 +28,7 @@ export default function FacadeOS() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Solar Stats Panel */}
           <div className="glass-effect p-8 rounded-2xl">
-            <h3 className="text-2xl font-bold mb-6 text-regen-gold">Real-Time Metrics</h3>
+            <h3 className="text-2xl font-bold mb-6 text-regen-gold">Real-Time Metrics <span className="text-xs text-gray-500">(Demo)</span></h3>
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between mb-2">
