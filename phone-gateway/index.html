@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>1JGM Phone Gateway</title>
+<style>
+:root{color-scheme:dark}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#0b1020;color:#eef3ff}main{max-width:720px;margin:auto;padding:22px}.card{background:#151d33;border:1px solid #2a395f;border-radius:18px;padding:18px;margin:14px 0}.eyebrow{opacity:.7;text-transform:uppercase;letter-spacing:.08em;font-size:12px}.title{font-size:28px;line-height:1.1;margin:.3em 0}.status{display:inline-block;padding:6px 10px;border-radius:99px;background:#17351f;border:1px solid #2d6c3d;font-size:13px}.btn{display:block;width:100%;box-sizing:border-box;border:0;border-radius:14px;padding:16px;margin:10px 0;font-size:17px;font-weight:800;text-align:center;text-decoration:none}.primary{background:#eef3ff;color:#0b1020}.secondary{background:#28395f;color:#eef3ff}.danger{background:#3c2430;color:#fff}.box{white-space:pre-wrap;background:#0d1528;border-radius:12px;padding:13px;max-height:260px;overflow:auto;font-size:14px;line-height:1.45}.small{opacity:.75;font-size:13px;line-height:1.45}code{word-break:break-all}</style>
+</head>
+<body><main>
+<p class="eyebrow">RegenExcalibur · 1JGM</p>
+<h1 class="title">Cloud Phone Gateway</h1>
+<p class="small">ChatGPT updates the cloud job. Your phone only opens this permanent page and taps Execute. No Apple Shortcut is required for normal browser handoffs.</p>
+<div class="card">
+  <div id="state" class="status">Loading latest job…</div>
+  <h2 id="jobTitle">Latest job</h2>
+  <div id="preview" class="box">Loading…</div>
+  <button id="execute" class="btn primary" disabled>Execute latest job</button>
+  <button id="copy" class="btn secondary" disabled>Copy work text only</button>
+  <a id="open" class="btn secondary" href="#">Open destination only</a>
+  <button class="btn secondary" onclick="location.reload()">Refresh cloud job</button>
+</div>
+<div class="card small">
+  <strong>How it works</strong><br>
+  1. ChatGPT writes or updates <code>job.json</code> in the cloud.<br>
+  2. This page fetches the latest job.<br>
+  3. Execute copies the prepared text to your clipboard and opens the destination in the same browser.<br>
+  4. You paste, review, and press the site's final Send/Post/Submit control yourself.
+</div>
+<div class="card small">
+  <strong>Security boundary</strong><br>
+  This gateway does not gain general access to iOS, passwords, photos, messages, or other apps. It only receives the job data published to this page and uses normal browser capabilities after your tap.
+</div>
+<script>
+let job=null;
+const qs=new URLSearchParams(location.search);
+async function load(){
+ try{
+   const r=await fetch('job.json?ts='+Date.now(),{cache:'no-store'});
+   if(!r.ok) throw new Error('HTTP '+r.status);
+   job=await r.json();
+   document.getElementById('state').textContent=job.status||'ready';
+   document.getElementById('jobTitle').textContent=job.title||'Untitled job';
+   document.getElementById('preview').textContent=job.copy||'(No work text supplied)';
+   document.getElementById('execute').disabled=false;
+   document.getElementById('copy').disabled=false;
+   document.getElementById('open').href=job.url||'#';
+ }catch(e){
+   document.getElementById('state').textContent='Gateway error';
+   document.getElementById('preview').textContent='Could not load cloud job: '+e.message;
+ }
+}
+async function copyWork(){
+ if(!job) return;
+ await navigator.clipboard.writeText(job.copy||'');
+ document.getElementById('state').textContent='Copied to clipboard';
+}
+async function execute(){
+ if(!job) return;
+ try{
+   await navigator.clipboard.writeText(job.copy||'');
+   document.getElementById('state').textContent='Copied — opening destination…';
+   setTimeout(()=>{location.href=job.url;},150);
+ }catch(e){
+   document.getElementById('state').textContent='Clipboard permission blocked';
+   document.getElementById('preview').textContent=(job.copy||'')+'\n\nCopy this text manually, then use Open destination only.';
+ }
+}
+document.getElementById('execute').addEventListener('click',execute);
+document.getElementById('copy').addEventListener('click',copyWork);
+load();
+</script>
+</main></body></html>
