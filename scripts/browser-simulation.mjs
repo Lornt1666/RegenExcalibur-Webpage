@@ -16,6 +16,7 @@ import { resolve, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { strict as assert } from "node:assert";
 import { chromium } from "playwright-core";
+import axe from "axe-core";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const out = resolve(process.env.RUNNER_TEMP || "/tmp", "regen-site-audit");
@@ -64,6 +65,18 @@ try {
       assert.ok(metric.main && metric.content,"Missing main content: "+slug);
       assert.ok(metric.scroll<=metric.width+2,slug+" at "+width+"px horizontally overflows by "+(metric.scroll-metric.width)+"px");
       await page.screenshot({path:out+"/"+slug.replace(".html","")+"-"+width+".png",fullPage:true,animations:"disabled"});
+      if(width===390 || width===1440) {
+        await page.addScriptTag({content:axe.source});
+        const accessibility=await page.evaluate(() => window.axe.run(document,{
+          runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa","wcag22aa"]}
+        }));
+        const violations=accessibility.violations.map(v=>({
+          id:v.id,impact:v.impact,description:v.description,
+          nodes:v.nodes.slice(0,3).map(n=>({target:n.target,summary:n.failureSummary}))
+        }));
+        if(violations.length) throw new Error("Axe WCAG findings: "+slug+" @ "+width+"px\n"+JSON.stringify(violations,null,2));
+        findings.push({role:"BLUE/AER",scenario:"WCAG automated axe-core: "+slug+"@"+width,status:"PASS"});
+      }
       findings.push({role:"GREEN",scenario:slug+"@"+width,status:"PASS",scrollWidth:metric.scroll});
     }
     if(width===390){
