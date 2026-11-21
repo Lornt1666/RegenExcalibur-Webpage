@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { evaluateCase, RUBRIC_VERSION } from "../conscience-engine.mjs";
 
 const all = {
@@ -62,4 +63,15 @@ test("review roles are all present without claiming live execution", () => {
   assert.deepEqual(Object.keys(r.RGBP), ["red", "green", "blue", "purple"]);
   assert.match(r.AER, /not performed/);
   assert.match(r.Tetrad1, /no live dispatch/);
+});
+
+test("exported report fields align with the versioned public JSON Schema", () => {
+  const schema = JSON.parse(readFileSync(new URL("../docs/conscience-report.schema.json", import.meta.url), "utf8"));
+  const report = evaluateCase(all);
+  assert.equal(report.schema, schema.properties.schema.const);
+  assert.equal(report.rubricVersion, schema.properties.rubricVersion.const);
+  assert.deepEqual(Object.keys(report).sort(), schema.required.slice().sort());
+  for (const key of Object.keys(report.declaredControls)) {
+    assert.equal(schema.properties.declaredControls.properties[key].type, "boolean");
+  }
 });
