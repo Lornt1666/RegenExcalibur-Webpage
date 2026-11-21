@@ -92,6 +92,10 @@ def main() -> None:
                 )
         for ref in info.references:
             url = urlsplit(ref)
+            if url.path.lower().endswith(".pdf"):
+                failures.append(
+                    f"{page}: historic PDFs require separate content review before public linking: {ref}"
+                )
             if url.scheme or url.netloc or ref.startswith("//") or ref.startswith("mailto:"):
                 continue
             target_name = unquote(url.path)
