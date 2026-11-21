@@ -37,6 +37,8 @@ This review uses analytical **RGBP / AER / Tetrad-1 roles** modeled in test case
 | RX-WEB-007 | No screenshot-backed multi-viewport test receipt | Medium, release assurance | CI-browser matrix across 4 viewports x 4 pages with screenshots | REMEDIATED + RECEIPT CAPTURED |
 | RX-WEB-008 | No independent third-party accessibility, privacy, legal, or security approval | High, assurance | Publish limitations and place external review in release gate | OPEN |
 | RX-WEB-009 | No confirmed production host, deployment smoke test or custom domain ownership | High, launch | Retain protected draft PR and explicit publication approval | OPEN |
+| RX-WEB-010 | Visitor pages included restricted public terminology | High, brand consistency | Rewrote six pages, added title/meta/label/body public-copy scanner, retained factual limitations | REMEDIATED + STATIC CHECK PASS |
+| RX-WEB-011 | Business inquiry path was only a local text draft | High, usability | Added explicit public GitHub issue form with consent, local copy and visitor-controlled submission | PARTIAL — PUBLIC ONLY; GitHub Issues availability after merge must be confirmed |
 
 ## Reproducible observations
 
@@ -55,11 +57,22 @@ WCAG-oriented automation receipt:
 - The tester also visually inspected representative desktop and mobile screenshot crops; the layout appeared coherent and the navigation/text remained visible.
 - Exact-head CI must be rechecked after any subsequent revision.
 
+## Business-page and lead-route iteration (November 21, 2026)
+
+- CI run **44914359442** (review branch, code head `670d2eddb52147831f9b3930c2be34d77015a9a8`): https://github.com/Lornt1666/RegenExcalibur-Webpage/actions/runs/44914359442
+- Standard validation: **12 unit tests passed**, public link/form/visitor-language checker passed across all six principal business pages.
+- Chromium simulation: **40 cases passed**, including six pages x four widths, 12 axe-core accessibility assessments, and project inquiry copy/consent/link behavior.
+- Captured **24 screenshots** and JSON demo evidence. No unexpected browser console errors or unwanted HTTP POST/PUT requests were observed in this scoped simulation.
+- Main public business pages, research overview and company-background pages use engineering and business vocabulary rather than terminology identifying the design tooling.
+- This is a **public-safe** inquiry mechanism. Visitors can post only after GitHub authentication; public GitHub issues must never be advertised as a confidential inbox. Private communication still requires a verified business-owned inbox or reviewed contact service.
+- The attached copy policy does not assert that a particular technology was absent from the site's development; it controls public marketing wording only.
+- Direct access to historical unlinked resources and previously published PDFs is not included in this six-page copy compliance claim.
+
 ## Remaining acceptance gates
 
 1. Final exact-head CI pass of automated checks (including WCAG-oriented inspection) and dependency inventory.
 2. Manual keyboard, screen-reader, 200%/400% zoom, browser/device and real-user usability checks. Automated accessibility results alone do not establish WCAG conformance.
-3. Verify operating business identity, legally appropriate service descriptions, contact method, domain ownership and publication permissions.
+3. Verify operating business identity, legally appropriate service descriptions, GitHub Issues enabled and its template operative on the publication branch, domain ownership and publication permissions.
 4. Conduct independent security and privacy review, especially before collecting real client data.
 5. Review all company documents and business claims for licensing, patents, financial statements, IP exposure and unsupported performance claims.
 6. Obtain explicit human approval to merge and publish. Record commit SHA, deployment URL, reproducible acceptance evidence and rollback target.
