@@ -22,6 +22,7 @@
 - `tests/conscience-engine.test.mjs` — unit and report-schema consistency tests.
 - `.github/ISSUE_TEMPLATE/project-inquiry.yml` — required public-facing inquiry form and disclosure.
 - `scripts/check_public_site.py` — six-page link, heading, public-language and contact-route integrity checks.
+- `scripts/probe_publication_readiness.py` — read-only live GitHub Pages and issue-template readiness receipts; never performs writes.
 - `scripts/browser-simulation.mjs` — 4-viewport Chromium simulation across six pages, inquiry workflow exercises, 12 axe-core automated WCAG checks, and 24 screenshot artifacts.
 - `docs/SIMULATED_AGENTS_WEBSITE_REVIEW.md` — simulated specialist-review results and outstanding release requirements.
 - `docs/PUBLIC_LANGUAGE_AND_LEAD_INTAKE.md` — public language restriction, lead privacy boundary and contact rollout contract.
@@ -38,7 +39,7 @@ python3 scripts/check_public_site.py
 
 ## Publishing
 
-The canonical *intended* URL is `https://lornt1666.github.io/RegenExcalibur-Webpage/` **if GitHub Pages is enabled and serves the publication branch**. A repository address or sitemap does not itself prove a working public deployment.
+The existing published site has been verified at `https://lornt1666.github.io/RegenExcalibur-Webpage/`. A read-only GitHub API probe on November 21, 2026 confirmed GitHub Pages enabled, with source branch `RegenExcalibur-Webpage` and path `/`, and the current homepage returning HTTP 200. **The redesign in this PR is not deployed**: the live homepage still serves the older `RegenExcalibur | Clean-Tech Systems Foundry` page. GitHub Issues is enabled; the new project inquiry template is not yet on the publication branch.
 
 1. Review this PR with an independent reviewer. Capture passing exact-head CI receipts and validate public claims, privacy, existing linked resources, and IP safety.
 2. Verify the target GitHub Pages configuration, build source and HTTPS. Preserve existing public assets and files.
