@@ -18,6 +18,7 @@ on:
       - "tests/conscience-engine.test.mjs"
       - "docs/CONSCIENCE_ARCHITECTURE.md"
       - "docs/SIMULATED_AGENTS_WEBSITE_REVIEW.md"
+      - "docs/PUBLIC_LANGUAGE_AND_LEAD_INTAKE.md"
       - "docs/conscience-report.schema.json"
       - "sitemap.xml"
       - "robots.txt"
