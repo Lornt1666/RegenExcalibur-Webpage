@@ -7,6 +7,9 @@ on:
       - "conscience.html"
       - "conscience-engine.mjs"
       - "conscience-ui.mjs"
+      - "contact.html"
+      - "contact-ui.mjs"
+      - "scripts/browser-simulation.mjs"
       - "business.css"
       - "privacy.html"
       - "tests/conscience-engine.test.mjs"
@@ -37,7 +40,38 @@ jobs:
         run: |
           node --check conscience-engine.mjs
           node --check conscience-ui.mjs
+          node --check contact-ui.mjs
+          node --check scripts/browser-simulation.mjs
       - name: Run isolated deterministic tests
         run: node --test tests/conscience-engine.test.mjs
       - name: Verify public page structure and static links
         run: python3 scripts/check_public_site.py
+
+  browser-simulation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout reviewed head without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install pinned browser driver (no source-side postinstall scripts)
+        run: npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.55.0
+      - name: Discover system Chrome
+        run: |
+          set -euo pipefail
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME_PATH"
+          printf 'CHROME_PATH=%s\n' "$CHROME_PATH" >> "$GITHUB_ENV"
+      - name: Run 4-viewport simulated RGBP/AER/Tetrad-1 inspection
+        run: node scripts/browser-simulation.mjs
+      - name: Preserve isolated screenshots and machine-readable report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: regenexcalibur-browser-simulation
+          path: ${{ runner.temp }}/regen-site-audit/
+          if-no-files-found: warn
+          retention-days: 7
