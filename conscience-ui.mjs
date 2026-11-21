@@ -28,6 +28,18 @@ function addFinding(label, value) {
   li.append(heading, detail);
   findings.append(li);
 }
+form.addEventListener("input", () => {
+  if (!lastReport) return;
+  // A changed declaration invalidates the previously exported evidence snapshot.
+  lastReport = null;
+  download.disabled = true;
+  outcome.classList.remove("hold", "review");
+  statusNode.textContent = "INPUTS CHANGED · REVIEW REQUIRED";
+  explainerNode.textContent = "The previous result is no longer current. Run the review again before exporting.";
+  findings.replaceChildren();
+  addFinding("Status", "Inputs changed since the last simulated review.");
+  reportCode.textContent = "No current report. Re-run the review.";
+});
 form.addEventListener("submit", event => {
   event.preventDefault();
   try {
