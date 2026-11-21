@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        **This is a public issue.** Do not submit personal contact details, private client information, credentials, contract terms, or confidential attachments. GitHub account sign-in is required. Use the comment thread for public follow-up; do not treat an inquiry as an accepted contract.
+        **This is a public issue, and your GitHub username will be visible with it.** Do not submit personal contact details, private client information, credentials, contract terms, or confidential attachments. GitHub account sign-in is required. Use the comment thread for public follow-up; do not treat an inquiry as an accepted contract.
   - type: input
     id: project
     attributes:
