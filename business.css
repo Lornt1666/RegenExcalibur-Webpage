@@ -9,3 +9,42 @@
 @media(max-width:1100px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav-links{gap:15px}.hero{grid-template-columns:1fr .8fr}.orbit-four{width:400px}.orbit-three{width:330px}.orbit-two{width:250px}.orbit-one{width:180px}.orbit-core{width:145px;height:145px}.orbit-label{font-size:9px}}
 @media(max-width:760px){.container{width:min(100% - 34px,1180px)}.nav{min-height:75px;gap:13px;flex-wrap:wrap;padding-block:14px}.nav-links{order:3;width:100%;overflow-x:auto;white-space:nowrap;justify-content:space-between;padding-bottom:5px}.nav-cta{margin-left:auto}.brand{font-size:11px}.brand small{font-size:9px}.hero{grid-template-columns:1fr;gap:5px;padding-block:50px 24px}.hero h1{font-size:clamp(45px,11vw,70px)}.hero-visual{min-height:325px;transform:scale(.77);margin:-20px -18px}.orbit-four{width:395px}.orbit-three{width:320px}.orbit-two{width:250px}.orbit-one{width:185px}.orbit-label.west{left:6px}.orbit-label.east{right:6px}.section{padding-block:68px}.section-heading,.contact-layout{display:block}.section-heading>p{margin-top:21px}.service-grid,.method-layout,.about-panel,.module-grid,.demo-grid,.note-list{grid-template-columns:1fr}.service-card{min-height:auto}.service-icon{margin:17px 0}.method-section{padding-block:64px}.method-layout{gap:30px}.about-panel{gap:0;padding:28px}.contact-actions{margin-top:25px}.site-footer nav{margin-top:10px}.page-hero{padding-block:48px 28px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+
+/* Business readiness improvements — client deliverables, transparent project status and readable mobile layouts. */
+.engagement-grid,.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.engagement-card,.project-card{display:flex;flex-direction:column;align-items:flex-start;background:linear-gradient(145deg,#102735,#0c1e2d);border:1px solid #315462;border-radius:12px;padding:27px;min-width:0}
+.engagement-card h3,.project-card h3{font-size:22px;letter-spacing:-.035em;margin:16px 0 12px;line-height:1.25}
+.engagement-card>p,.project-card>p{font-size:14px;color:#bfd3da}
+.engagement-card .deliverable{margin-top:auto;border-top:1px solid #345967;padding-top:17px;color:#d2e6e6}
+.engagement-card .deliverable strong{color:var(--teal)}
+.engagement-section{border-top:1px solid #233d4a;padding-top:80px}
+.scope-note{font-size:13px;color:#bdd2d9;max-width:880px;margin:25px 0}
+.project-card .text-link{margin-top:auto;padding-top:15px}
+.stage{font-size:10px;color:var(--lime);letter-spacing:.13em;font-weight:800}
+.contact-instruction{font-size:13px!important;margin:0 0 6px;line-height:1.6;color:#d2e4e7!important}
+.text-area{resize:vertical;line-height:1.6;min-height:100px}
+.criteria{border:0;padding:0;margin-inline:0;min-inline-size:0}
+.criteria legend{padding:0;margin-bottom:12px}
+.criterion{min-height:32px}
+.demo-panel{min-width:0}
+.nav-links a{display:inline-flex;align-items:center;min-height:32px}
+.site-footer nav a{display:inline-flex;align-items:center;min-height:28px}
+.btn:focus-visible,.text-link:focus-visible{outline:3px solid #ffe0a0;outline-offset:4px}
+@media(max-width:950px){.engagement-grid,.project-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){
+  .engagement-grid,.project-grid{grid-template-columns:1fr}
+  .hero-visual{transform:none;min-height:318px;margin:0;max-width:100%}
+  .orbit-one{width:min(46vw,178px)}
+  .orbit-two{width:min(68vw,236px)}
+  .orbit-three{width:min(84vw,290px)}
+  .orbit-four{width:min(98vw,318px)}
+  .orbit-core{width:min(39vw,143px);height:min(39vw,143px)}
+  .orbit-label{font-size:8px;letter-spacing:.1em}
+  .orbit-label.west{left:0}.orbit-label.east{right:0}
+  .strip-inner{gap:11px 22px}
+  .section-heading h2{overflow-wrap:break-word}
+  .demo-panel{padding:18px}
+  .demo-controls .btn{min-height:46px}
+}
+@media(max-width:350px){.nav-links{gap:12px}.nav-links a{font-size:12px}.brand small{letter-spacing:0}.orbit-label{font-size:7px}}
