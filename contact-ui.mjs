@@ -65,6 +65,8 @@ form.addEventListener("submit", event => {
 });
 copyButton.addEventListener("click", async () => {
   if (!preview.value || copyButton.disabled || !publicConsent.checked) return;
+  draftCurrent = true;
+  setPublicLink(true);
   try {
     await navigator.clipboard.writeText(preview.value);
     feedback.textContent = "Draft copied. Open the public GitHub form, paste the draft and submit it there. You must sign in to GitHub.";
@@ -73,6 +75,4 @@ copyButton.addEventListener("click", async () => {
     preview.select();
     feedback.textContent = "Automatic copying is unavailable. Copy the selected draft manually, then use the public GitHub form.";
   }
-  draftCurrent = true;
-  setPublicLink(true);
 });
