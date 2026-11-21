@@ -21,7 +21,8 @@
 - `docs/CONSCIENCE_ARCHITECTURE.md` — production architecture, control model, threat model and release acceptance gates.
 - `tests/conscience-engine.test.mjs` — unit and report-schema consistency tests.
 - `scripts/check_public_site.py` — offline local-link checks.
-- `scripts/browser-simulation.mjs` — 4-viewport headless Chromium simulation and adversarial interface exercises; CI screenshot artifacts.
+- `scripts/browser-simulation.mjs` — 4-viewport headless Chromium simulation, adversarial interface exercises, 8 axe-core automated WCAG checks, and CI screenshot artifacts.
+- `docs/SIMULATED_AGENTS_WEBSITE_REVIEW.md` — RGBP/AER/Tetrad-1 simulation results, actual evidence, release holds.
 
 Check with:
 
