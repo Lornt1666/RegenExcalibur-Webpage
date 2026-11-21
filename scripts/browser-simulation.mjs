@@ -11,6 +11,7 @@
  */
 import { createServer } from "node:http";
 import { readFile, mkdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { resolve, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { strict as assert } from "node:assert";
@@ -26,6 +27,7 @@ const server = createServer(async (req,res) => {
   if(req.method!=="GET" && req.method!=="HEAD") {res.writeHead(405).end("Method not allowed");return;}
   let url;
   try{url=new URL(req.url || "/", "http://127.0.0.1");}catch{res.writeHead(400).end();return;}
+  if(url.pathname==="/favicon.ico"){res.writeHead(204).end();return;}
   const name=decodeURIComponent(url.pathname==="/" ? "/index.html":url.pathname);
   const target=resolve(root,"."+name);
   if(!target.startsWith(root+"/")){res.writeHead(403).end();return;}
@@ -38,7 +40,8 @@ const server = createServer(async (req,res) => {
 await new Promise((ok,reject) => {server.once("error", reject);server.listen(0,"127.0.0.1",ok);});
 const addr=server.address();
 const base="http://127.0.0.1:"+addr.port;
-const bin=process.env.CHROME_PATH || ["/usr/bin/google-chrome","/usr/bin/chromium","/usr/bin/chromium-browser"].find(x=>x);
+const bin=process.env.CHROME_PATH || ["/usr/bin/google-chrome","/usr/bin/chromium","/usr/bin/chromium-browser"].find(existsSync);
+if (!bin) throw new Error("A Chrome/Chromium executable is required for browser simulation.");
 let browser;
 const findings=[];
 const errors=[];
