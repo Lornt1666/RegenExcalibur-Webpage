@@ -1,0 +1,38 @@
+name: Public Business Site & Conscience Demo Checks
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "conscience.html"
+      - "conscience-engine.mjs"
+      - "conscience-ui.mjs"
+      - "business.css"
+      - "privacy.html"
+      - "tests/conscience-engine.test.mjs"
+      - "docs/CONSCIENCE_ARCHITECTURE.md"
+      - ".github/workflows/conscience-site-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout reviewed head without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Report Node runtime
+        run: node --version
+      - name: Check JS module syntax
+        run: |
+          node --check conscience-engine.mjs
+          node --check conscience-ui.mjs
+      - name: Run isolated deterministic tests
+        run: node --test tests/conscience-engine.test.mjs
+      - name: Verify public page structure and static links
+        run: python3 scripts/check_public_site.py
