@@ -58,7 +58,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install pinned browser driver (no source-side postinstall scripts)
-        run: npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.55.0
+        run: npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.55.0 axe-core@4.10.3
       - name: Discover system Chrome
         run: |
           set -euo pipefail
