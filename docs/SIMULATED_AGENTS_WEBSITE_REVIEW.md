@@ -5,7 +5,7 @@
 **Repository:** Lornt1666/RegenExcalibur-Webpage  
 **Branch:** feature/business-conscience-site-2026-11-21  
 **PR:** https://github.com/Lornt1666/RegenExcalibur-Webpage/pull/2  
-**Current release decision:** HOLD FOR HUMAN PUBLICATION APPROVAL
+**Current release decision:** DESIGN / AUTOMATED QA PASS; HOLD FOR INDEPENDENT REVIEW AND HUMAN PUBLICATION APPROVAL
 
 ## Mission and evidence boundaries
 
@@ -32,7 +32,7 @@ This review uses analytical **RGBP / AER / Tetrad-1 roles** modeled in test case
 | RX-WEB-002 | Visitors could not distinguish public prototypes from completed commercial work | High, trust | Added development-stage portfolio links and clear research labels | REMEDIATED |
 | RX-WEB-003 | Conscience report could be exported after a visitor changed its form values | High, data integrity | Invalidated prior report on input and required a new review | REMEDIATED + CHROME TESTED |
 | RX-WEB-004 | Mobile ring illustration risked content clipping | Medium, responsive UX | Replaced scaled fixed-size rings with constrained responsive sizing | REMEDIATED + CHROME TESTED |
-| RX-WEB-005 | Checkbox group lacked programmatic fieldset/legend semantics | Medium, accessibility | Added native fieldset/legend and keyboard-target improvements | REMEDIATED; FORMAL ACCESSIBILITY STILL REQUIRED |
+| RX-WEB-005 | Checkbox group lacked programmatic fieldset/legend semantics | Medium, accessibility | Added native fieldset/legend and keyboard-target improvements | REMEDIATED; AUTOMATED AXE PASS, MANUAL ASSISTIVE-TECH REVIEW PENDING |
 | RX-WEB-006 | Initial call-to-action led to a technical profile, not a scoped business inquiry | High, conversion | Browser-local brief builder, review and copy capability | PARTIAL — verified private inbound contact channel still needed |
 | RX-WEB-007 | No screenshot-backed multi-viewport test receipt | Medium, release assurance | CI-browser matrix across 4 viewports x 4 pages with screenshots | REMEDIATED + RECEIPT CAPTURED |
 | RX-WEB-008 | No independent third-party accessibility, privacy, legal, or security approval | High, assurance | Publish limitations and place external review in release gate | OPEN |
@@ -48,7 +48,12 @@ Initial success receipt:
 - Explicit browser assertions: zero unexpected console errors, no non-GET/HEAD requests, no scroll-width overflow under tested settings, and functional demo export and no-consent HOLD.
 - Browser screenshots reviewed in the ChatGPT execution environment for desktop and mobile visual presentation; this is an internal qualitative check, not independent accessibility validation.
 
-Automated WCAG 2.2 A/AA axe-core checks are being added as a separate release condition. Record the exact latest head run before publication; earlier evidence cannot certify later commits.
+WCAG-oriented automation receipt:
+- GitHub Actions run **44908155429**: https://github.com/Lornt1666/RegenExcalibur-Webpage/actions/runs/44908155429
+- Browser job passed **28 scenarios**, including 8 automated axe-core WCAG 2.2 A/AA checks (390px and 1440px across four pages); **0 automated WCAG violations** found.
+- 16 screenshots retained. These are a machine-test result, not a certification of accessibility.
+- The tester also visually inspected representative desktop and mobile screenshot crops; the layout appeared coherent and the navigation/text remained visible.
+- Exact-head CI must be rechecked after any subsequent revision.
 
 ## Remaining acceptance gates
 
