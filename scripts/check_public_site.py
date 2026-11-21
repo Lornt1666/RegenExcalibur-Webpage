@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ("index.html", "conscience.html", "privacy.html")
+PAGES = ("index.html", "conscience.html", "privacy.html", "contact.html")
 
 
 class PageParser(HTMLParser):
