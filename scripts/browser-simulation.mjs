@@ -114,8 +114,17 @@ try {
       findings.push({role:"RED/BLUE",scenario:"XSS-like input, stale-result block, no-consent HOLD and JSON export",status:"PASS"});
 
       await page.goto(base+"/contact.html");
+      await page.keyboard.press("Tab");
+      assert.equal(await page.evaluate(() => document.activeElement?.getAttribute("href")), "#main");
+      await page.locator("#inquiry-name").focus();
+      await page.keyboard.press("Tab");
+      assert.equal(await page.evaluate(() => document.activeElement?.id), "inquiry-type");
+      findings.push({role:"GREEN/BLUE",scenario:"Keyboard skip-link and sequential form focus",status:"PASS"});
       await page.locator("#inquiry-name").fill("Demonstration research brief");
       await page.locator("#inquiry-goal").fill("Explore a public dataset without uploading confidential details");
+      await page.locator('#inquiry-form button[type="submit"]').click();
+      assert.equal(await page.locator("#inquiry-preview").inputValue(), "", "Public disclosure must be required");
+      findings.push({role:"RED/BLUE",scenario:"Public information acknowledgement is mandatory",status:"PASS"});
       await page.locator("#public-consent").check();
       await page.locator('#inquiry-form button[type="submit"]').click();
       assert.ok((await page.locator("#inquiry-preview").inputValue()).includes("Demonstration research brief"));
