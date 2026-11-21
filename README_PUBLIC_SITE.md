@@ -9,6 +9,7 @@
 - `index.html` — business homepage, focus areas, method, company profile, collaboration CTA.
 - `conscience.html` — proposed Conscience Evaluation Engine (RGBP teams, AER and Tetrad-1 specialist operations) and browser-only demo.
 - `privacy.html` — scope-specific privacy and demonstration limitations.
+- `contact.html` + `contact-ui.mjs` — offline-only project inquiry drafting; copy does not submit anything.
 - `whitepaper.html` and `launch-gate.html` — pre-existing public material.
 - `sitemap.xml` and `robots.txt` — intended search discovery metadata.
 
@@ -20,12 +21,14 @@
 - `docs/CONSCIENCE_ARCHITECTURE.md` — production architecture, control model, threat model and release acceptance gates.
 - `tests/conscience-engine.test.mjs` — unit and report-schema consistency tests.
 - `scripts/check_public_site.py` — offline local-link checks.
+- `scripts/browser-simulation.mjs` — 4-viewport headless Chromium simulation and adversarial interface exercises; CI screenshot artifacts.
 
 Check with:
 
 ```sh
 node --check conscience-engine.mjs
 node --check conscience-ui.mjs
+node --check contact-ui.mjs
 node --test tests/conscience-engine.test.mjs
 python3 scripts/check_public_site.py
 ```
