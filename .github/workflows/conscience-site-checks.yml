@@ -11,6 +11,11 @@ on:
       - "privacy.html"
       - "tests/conscience-engine.test.mjs"
       - "docs/CONSCIENCE_ARCHITECTURE.md"
+      - "docs/conscience-report.schema.json"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "README_PUBLIC_SITE.md"
+      - "scripts/check_public_site.py"
       - ".github/workflows/conscience-site-checks.yml"
   workflow_dispatch:
 
