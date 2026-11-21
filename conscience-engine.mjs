@@ -77,7 +77,7 @@ export function evaluateCase(raw, evaluatedAt = null) {
     Tetrad1: "Proposed specialist-operation stages only; no live dispatch, integration or authorization occurred."
   };
   return {
-    schema: "https://example.invalid/regenexcalibur/cee-demo/v0.1.0",
+    schema: "urn:regenexcalibur:cee:demo-report:0.1.0",
     rubricVersion: RUBRIC_VERSION,
     caseId: demoId(normalized),
     evaluatedAt,
