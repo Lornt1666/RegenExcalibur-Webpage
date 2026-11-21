@@ -53,7 +53,7 @@ try {
     const page=await context.newPage();
     page.on("pageerror",e=>errors.push("JS "+e.message));
     page.on("console",m=>{if(m.type()==="error") errors.push("CONSOLE "+m.text());});
-    for(const slug of ["index.html","conscience.html","contact.html","privacy.html"]) {
+    for(const slug of ["index.html","conscience.html","contact.html","privacy.html","whitepaper.html","launch-gate.html"]) {
       const response=await page.goto(base+"/"+slug,{waitUntil:"networkidle",timeout:30000});
       assert.equal(response.status(),200,slug);
       assert.equal(await page.locator("h1").count(),1,"exactly one primary heading: "+slug);
@@ -116,20 +116,27 @@ try {
       await page.goto(base+"/contact.html");
       await page.locator("#inquiry-name").fill("Demonstration research brief");
       await page.locator("#inquiry-goal").fill("Explore a public dataset without uploading confidential details");
+      await page.locator("#public-consent").check();
       await page.locator('#inquiry-form button[type="submit"]').click();
       assert.ok((await page.locator("#inquiry-preview").inputValue()).includes("Demonstration research brief"));
       assert.equal(await page.locator("#copy-inquiry").isEnabled(),true);
+      assert.equal(await page.locator("#open-public-inquiry").getAttribute("aria-disabled"),"true");
+      await page.locator("#copy-inquiry").click();
+      assert.equal(await page.locator("#open-public-inquiry").getAttribute("aria-disabled"),"false");
+      assert.match(await page.locator("#open-public-inquiry").getAttribute("href"),/\/issues\/new\?template=project-inquiry\.yml/);
+      assert.equal(await page.locator("#open-public-inquiry").getAttribute("target"),"_blank");
       await page.locator("#inquiry-goal").fill("Updated goal");
       assert.equal(await page.locator("#copy-inquiry").isEnabled(),false);
       assert.equal(await page.locator("#inquiry-preview").inputValue(),"");
-      findings.push({role:"GREEN/BLUE",scenario:"Inquiry preview, no-submit boundary and stale-draft block",status:"PASS"});
+      assert.equal(await page.locator("#open-public-inquiry").getAttribute("aria-disabled"),"true");
+      findings.push({role:"GREEN/BLUE",scenario:"GitHub public inquiry route, consent, local copy and stale-draft block",status:"PASS"});
     }
     await context.close();
   }
   assert.equal(methods.every(x=>x==="GET"||x==="HEAD"),true,"An unexpected HTTP write occurred.");
   assert.deepEqual(errors,[],"Browser runtime errors were observed.");
   findings.push({role:"PURPLE",scenario:"No browser console errors, no non-GET requests",status:"PASS"});
-  console.log(JSON.stringify({status:"PASS",cases:findings.length,findings,screenshots:16,output:out},null,2));
+  console.log(JSON.stringify({status:"PASS",cases:findings.length,findings,screenshots:24,output:out},null,2));
 } catch(error) {
   console.error("BROWSER SIMULATION FAILED: "+(error.stack||String(error)));
   console.error(JSON.stringify({findings,errors},null,2));
