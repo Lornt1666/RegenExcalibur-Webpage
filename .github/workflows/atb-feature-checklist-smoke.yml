@@ -72,7 +72,6 @@ jobs:
 
   remote-page-check:
     name: Verify live GitHub Pages HTTP 200 (no form submission)
-    if: github.event_name != 'pull_request'
     needs: static-check
     runs-on: ubuntu-latest
     timeout-minutes: 4
