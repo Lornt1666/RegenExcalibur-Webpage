@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - RegenExcalibur-Webpage
+      - work/atb-pages-public-smoke-2026-11-22
     paths:
       - "atb-feature-checklist/index.html"
       - ".github/workflows/atb-feature-checklist-smoke.yml"
