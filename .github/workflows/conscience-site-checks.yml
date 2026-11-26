@@ -1,0 +1,108 @@
+name: Public Business Site & Conscience Demo Checks
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "conscience.html"
+      - "conscience-engine.mjs"
+      - "conscience-ui.mjs"
+      - "contact.html"
+      - "contact-ui.mjs"
+      - "whitepaper.html"
+      - "launch-gate.html"
+      - ".github/ISSUE_TEMPLATE/project-inquiry.yml"
+      - "scripts/browser-simulation.mjs"
+      - "business.css"
+      - "privacy.html"
+      - "tests/conscience-engine.test.mjs"
+      - "docs/CONSCIENCE_ARCHITECTURE.md"
+      - "docs/SIMULATED_AGENTS_WEBSITE_REVIEW.md"
+      - "docs/PUBLIC_LANGUAGE_AND_LEAD_INTAKE.md"
+      - "docs/conscience-report.schema.json"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "README_PUBLIC_SITE.md"
+      - "scripts/check_public_site.py"
+      - "scripts/probe_publication_readiness.py"
+      - ".github/workflows/conscience-site-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout reviewed head without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Report Node runtime
+        run: node --version
+      - name: Check JS module syntax
+        run: |
+          node --check conscience-engine.mjs
+          node --check conscience-ui.mjs
+          node --check contact-ui.mjs
+          node --check scripts/browser-simulation.mjs
+      - name: Run isolated deterministic tests
+        run: node --test tests/conscience-engine.test.mjs
+      - name: Verify public page structure and static links
+        run: python3 scripts/check_public_site.py
+
+  browser-simulation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout reviewed head without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install pinned browser driver (no source-side postinstall scripts)
+        run: npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.55.0 axe-core@4.10.3
+      - name: Discover system Chrome
+        run: |
+          set -euo pipefail
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME_PATH"
+          printf 'CHROME_PATH=%s\n' "$CHROME_PATH" >> "$GITHUB_ENV"
+      - name: Run 4-viewport simulated RGBP/AER/Tetrad-1 inspection
+        run: node scripts/browser-simulation.mjs
+      - name: Preserve isolated screenshots and machine-readable report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: regenexcalibur-browser-simulation
+          path: ${{ runner.temp }}/regen-site-audit/
+          if-no-files-found: warn
+          retention-days: 7
+
+  release-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: read
+      pages: read
+    steps:
+      - name: Checkout read-only release probe
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Inspect hosting, public issue form and existing public URL without writes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/probe_publication_readiness.py
+      - name: Retain read-only release evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: regenexcalibur-release-readiness
+          path: ${{ runner.temp }}/regen-release-readiness.json
+          if-no-files-found: warn
+          retention-days: 7

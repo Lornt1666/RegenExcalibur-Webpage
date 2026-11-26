@@ -1,0 +1,54 @@
+name: Public project inquiry
+description: Request an initial conversation about technical research, engineering support or a potential collaboration. Public information only.
+title: "Inquiry: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This is a public issue, and your GitHub username will be visible with it.** Do not submit personal contact details, private client information, credentials, contract terms, or confidential attachments. GitHub account sign-in is required. Use the comment thread for public follow-up; do not treat an inquiry as an accepted contract.
+  - type: input
+    id: project
+    attributes:
+      label: Project or topic
+      description: A short non-sensitive name for the work.
+      placeholder: Preliminary research and engineering study
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area of work
+      options:
+        - Technical research and evidence review
+        - Software systems and workflow architecture
+        - Documentation, quality assurance and prototype planning
+        - Clean technology research collaboration
+        - Other public-safe inquiry
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Public project summary
+      description: Describe the problem and desired outcome without any sensitive or identifying details.
+      placeholder: What should be evaluated, documented or prototyped?
+    validations:
+      required: true
+  - type: dropdown
+    id: timeframe
+    attributes:
+      label: Approximate timeframe
+      options:
+        - To be discussed
+        - Within two weeks
+        - Within one month
+        - Long-term collaboration
+    validations:
+      required: false
+  - type: checkboxes
+    id: public-safe
+    attributes:
+      label: Public information acknowledgement
+      options:
+        - label: I understand this request is public and have excluded all personal, confidential and sensitive information.
+          required: true

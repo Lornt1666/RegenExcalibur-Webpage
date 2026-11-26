@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://lornt1666.github.io/RegenExcalibur-Webpage/sitemap.xml

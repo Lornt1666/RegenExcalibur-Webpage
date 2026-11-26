@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lornt1666.github.io/RegenExcalibur-Webpage/docs/conscience-report.schema.json",
+  "title": "RegenExcalibur Conscience Demo Report",
+  "description": "Machine-readable example from a browser-only self-declared checklist, not verification or authorization.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "rubricVersion",
+    "caseId",
+    "evaluatedAt",
+    "operationalStatus",
+    "methodology",
+    "case",
+    "declaredControls",
+    "declaredCoveragePercent",
+    "missingControls",
+    "missingCritical",
+    "disposition",
+    "recommendations",
+    "RGBP",
+    "AER",
+    "Tetrad1",
+    "authority",
+    "provenance"
+  ],
+  "properties": {
+    "schema": {
+      "const": "urn:regenexcalibur:cee:demo-report:0.1.0"
+    },
+    "rubricVersion": {
+      "const": "REX-CEE-001/demo/0.1.0"
+    },
+    "caseId": {
+      "type": "string",
+      "pattern": "^DEMO-[0-9a-f]{8}$"
+    },
+    "evaluatedAt": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "operationalStatus": {
+      "const": "LOCAL_DEMONSTRATION_ONLY"
+    },
+    "methodology": {
+      "type": "string"
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "impact"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "impact": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      }
+    },
+    "declaredControls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence",
+        "consent",
+        "oversight",
+        "security",
+        "reversibility",
+        "impactAssessment"
+      ],
+      "properties": {
+        "evidence": {
+          "type": "boolean"
+        },
+        "consent": {
+          "type": "boolean"
+        },
+        "oversight": {
+          "type": "boolean"
+        },
+        "security": {
+          "type": "boolean"
+        },
+        "reversibility": {
+          "type": "boolean"
+        },
+        "impactAssessment": {
+          "type": "boolean"
+        }
+      }
+    },
+    "declaredCoveragePercent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "missingControls": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "evidence",
+          "consent",
+          "oversight",
+          "security",
+          "reversibility",
+          "impactAssessment"
+        ]
+      }
+    },
+    "missingCritical": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "evidence",
+          "consent",
+          "oversight",
+          "security",
+          "reversibility",
+          "impactAssessment"
+        ]
+      }
+    },
+    "disposition": {
+      "enum": [
+        "HOLD",
+        "HUMAN_REVIEW_REQUIRED"
+      ]
+    },
+    "recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "RGBP": {
+      "type": "object",
+      "required": [
+        "red",
+        "green",
+        "blue",
+        "purple"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "red": {
+          "type": "string"
+        },
+        "green": {
+          "type": "string"
+        },
+        "blue": {
+          "type": "string"
+        },
+        "purple": {
+          "type": "string"
+        }
+      }
+    },
+    "AER": {
+      "type": "string"
+    },
+    "Tetrad1": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "string"
+    }
+  }
+}
